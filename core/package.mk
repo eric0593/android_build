@@ -2,6 +2,18 @@
 # TARGET_ARCH and TARGET_2ND_ARCH.
 # To build it for TARGET_2ND_ARCH in a 64bit product, use "LOCAL_MULTILIB := 32".
 
+skip_definition :=
+
+# miaoxiaomngE
+
+
+ifeq ($(filter $(LOCAL_PACKAGE_NAME),$(OEM_IGNORE_PACKAGES)),$(LOCAL_PACKAGE_NAME))
+    skip_definition = true
+    $(warning package OEM_IGNORE_PACKAGE=$(LOCAL_PACKAGE_NAME))
+endif
+
+ifndef skip_definition
+
 my_prefix := TARGET_
 include $(BUILD_SYSTEM)/multilib.mk
 
@@ -74,3 +86,4 @@ LOCAL_2ND_ARCH_VAR_PREFIX :=
 LOCAL_NO_2ND_ARCH_MODULE_SUFFIX :=
 
 my_module_arch_supported :=
+endif#skip_definition
